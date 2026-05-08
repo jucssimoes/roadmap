@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Wehandle 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    /* ===== Wehandle brand ===== */
+    --brand-rose: #C0185C;
+    --brand-rose-soft: #FBEAF0;
+    --brand-rose-border: #ED93B1;
+    --brand-rose-text: #72243E;
+    --brand-rose-text-strong: #4B1528;
+    --brand-navy: #0D1B3E;
+
+    /* ===== Status colors (5) — semânticos, não conflitam com brand ===== */
+    --status-lancado: #1D9E75;
+    --status-lancado-bg: #E1F5EE;
+    --status-piloto: #8B5CF6;
+    --status-piloto-bg: #F5F3FF;
+    --status-dev: #378ADD;
+    --status-dev-bg: #E6F1FB;
+    --status-definicao: #EF9F27;
+    --status-definicao-bg: #FAEEDA;
+    --status-previsto: #888780;
+    --status-previsto-bg: #F5F4F0;
+
+    /* ===== Module colors (4) — Wehandle palette ===== */
+    --mod-gt: var(--brand-rose);
+    --mod-gt-bg: var(--brand-rose-soft);
+    --mod-gt-text: var(--brand-rose-text-strong);
+    --mod-mob: var(--brand-navy);
+    --mod-mob-bg: #DBE2EF;
+    --mod-mob-text: #0D1B3E;
+    --mod-ehs: #0F766E;
+    --mod-ehs-bg: #CCFBF1;
+    --mod-ehs-text: #0F766E;
+    --mod-op: #5F5E5A;
+    --mod-op-bg: #EEEDE8;
+    --mod-op-text: #1C1917;
+
+    /* ===== Neutrals (warm gray Wehandle) ===== */
+    --gray-50: #F5F4F0;
+    --gray-100: #EEEDE8;
+    --gray-200: #D3D1C7;
+    --gray-300: #BFBDB3;
+    --gray-400: #888780;
+    --gray-500: #6B6A65;
+    --gray-600: #5F5E5A;
+    --gray-700: #3F3E3B;
+    --gray-800: #2A2A28;
+    --gray-900: #1C1917;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    min-height: 100vh;
+    padding: 32px 0 48px;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  .page {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ========== HEADER ========== */
+  .page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--brand-rose);
+  }
+  .page-header-left .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--brand-rose);
+    margin-bottom: 8px;
+  }
+  .page-header-left h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--brand-navy);
+    line-height: 1.05;
+  }
+  .page-header-left .subtitle {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    margin-top: 8px;
+    max-width: 720px;
+  }
+  .page-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .updated-badge {
+    background: var(--brand-navy);
+    color: rgba(255,255,255,0.92);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .toggle-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gray-200);
+    background: white;
+    transition: all 0.15s;
+  }
+  .toggle-switch:hover { background: var(--gray-50); border-color: var(--gray-300); }
+  .toggle-switch input { display: none; }
+  .toggle-track {
+    width: 32px; height: 18px;
+    background: var(--gray-300);
+    border-radius: 9px;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 14px; height: 14px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle-switch input:checked + .toggle-track {
+    background: var(--brand-rose);
+  }
+  .toggle-switch input:checked + .toggle-track::after {
+    left: 16px;
+  }
+
+  /* ========== SUMMARY STRIP ========== */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .summary-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 3px solid;
+  }
+  .summary-card.lancado { border-top-color: var(--status-lancado); }
+  .summary-card.piloto { border-top-color: var(--status-piloto); }
+  .summary-card.dev { border-top-color: var(--status-dev); }
+  .summary-card.definicao { border-top-color: var(--status-definicao); }
+  .summary-card.previsto { border-top-color: var(--status-previsto); }
+  .summary-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--gray-900);
+  }
+  .summary-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    color: var(--gray-500);
+  }
+
+  /* ========== ROADMAP GRID ========== */
+  .roadmap {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Month header */
+  .month-header {
+    display: grid;
+    grid-template-columns: 200px repeat(12, 1fr);
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    height: 38px;
+    position: sticky; top: 0; z-index: 5;
+  }
+  .month-header .corner {
+    border-right: 1px solid var(--gray-200);
+  }
+  .month-header .month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-right: 1px solid var(--gray-200);
+  }
+  .month-header .month:last-child { border-right: none; }
+  .month-header .month.current {
+    color: var(--brand-rose);
+    background: var(--brand-rose-soft);
+    font-weight: 800;
+  }
+
+  /* Swim lanes */
+  .swim-lanes { position: relative; }
+  .swim-lane {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid var(--gray-200);
+    min-height: 90px;
+  }
+  .swim-lane:last-child { border-bottom: none; }
+
+  .lane-label {
+    border-right: 1px solid var(--gray-200);
+    padding: 14px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4px;
+    background: var(--gray-50);
+  }
+  .lane-label .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    width: fit-content;
+  }
+  .lane-label .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .lane-label .lane-count {
+    font-size: 0.68rem;
+    color: var(--gray-400);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .lane-lancado .status-pill { background: var(--status-lancado-bg); color: var(--status-lancado); }
+  .lane-lancado .status-dot { background: var(--status-lancado); }
+  .lane-piloto .status-pill { background: var(--status-piloto-bg); color: var(--status-piloto); }
+  .lane-piloto .status-dot { background: var(--status-piloto); }
+  .lane-dev .status-pill { background: var(--status-dev-bg); color: var(--status-dev); }
+  .lane-dev .status-dot { background: var(--status-dev); }
+  .lane-definicao .status-pill { background: var(--status-definicao-bg); color: var(--status-definicao); }
+  .lane-definicao .status-dot { background: var(--status-definicao); }
+  .lane-previsto .status-pill { background: var(--status-previsto-bg); color: var(--status-previsto); }
+  .lane-previsto .status-dot { background: var(--status-previsto); }
+
+  .lane-content {
+    padding: 8px 8px 8px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Module group ("chaves") */
+  .module-group {
+    position: relative;
+    padding: 4px 0 4px 12px;
+    border-radius: 4px;
+    background: var(--gray-50);
+  }
+  .module-group::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px; bottom: 6px;
+    width: 4px;
+    border-radius: 2px;
+  }
+  .module-group.mod-gt::before { background: var(--mod-gt); }
+  .module-group.mod-gt { background: linear-gradient(to right, #FDF4F8, #ffffff 60%); }
+  .module-group.mod-mob::before { background: var(--mod-mob); }
+  .module-group.mod-mob { background: linear-gradient(to right, #EDF1F7, #ffffff 60%); }
+  .module-group.mod-ehs::before { background: var(--mod-ehs); }
+  .module-group.mod-ehs { background: linear-gradient(to right, #EFFCF8, #ffffff 60%); }
+  .module-group.mod-op::before { background: var(--mod-op); }
+  .module-group.mod-op { background: linear-gradient(to right, #F5F5F2, #ffffff 60%); }
+
+  .module-group-header {
+    padding: 2px 8px 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .module-group.mod-gt .module-group-header { color: var(--mod-gt); }
+  .module-group.mod-mob .module-group-header { color: var(--mod-mob); }
+  .module-group.mod-ehs .module-group-header { color: var(--mod-ehs); }
+  .module-group.mod-op .module-group-header { color: var(--mod-op); }
+  .module-group-header .sep { opacity: 0.5; margin: 0 6px; }
+  .module-group-header .sub-area { font-weight: 600; }
+
+  .module-group-tracks {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 4px;
+  }
+
+  .card-track {
+    position: relative;
+    height: 54px;
+  }
+
+  /* Card */
+  .card {
+    position: absolute;
+    top: 0; bottom: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 3;
+  }
+  .card-bar-color {
+    width: 4px;
+    flex-shrink: 0;
+  }
+  .card-content {
+    flex: 1;
+    padding: 6px 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    min-width: 0;
+    background: white;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.25;
+  }
+  .card-desc {
+    font-size: 0.68rem;
+    color: var(--gray-500);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-tags {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .env-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    line-height: 1;
+    height: 18px;
+    min-width: 18px;
+    padding: 0 5px;
+    border-radius: 4px;
+    background: var(--gray-100);
+    color: var(--gray-600);
+    flex-shrink: 0;
+    border: 1px solid var(--gray-200);
+  }
+  .env-badge.env-interno {
+    background: var(--gray-700);
+    color: white;
+    border-color: var(--gray-700);
+  }
+  .figma-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    width: 18px;
+    border-radius: 4px;
+    background: var(--brand-rose-soft);
+    color: var(--brand-rose);
+    flex-shrink: 0;
+    border: 1px solid var(--brand-rose-border);
+  }
+  .figma-indicator svg {
+    width: 11px;
+    height: 11px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+  .modal-meta-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    background: var(--gray-100);
+    line-height: 1.4;
+  }
+
+  /* Card status colors (border + bar) */
+  .card.status-lancado { border: 1px solid var(--status-lancado); }
+  .card.status-lancado .card-bar-color { background: var(--status-lancado); }
+  .card.status-piloto { border: 1px solid var(--status-piloto); }
+  .card.status-piloto .card-bar-color { background: var(--status-piloto); }
+  .card.status-dev { border: 1px solid var(--status-dev); }
+  .card.status-dev .card-bar-color { background: var(--status-dev); }
+  .card.status-definicao { border: 1px solid var(--status-definicao); }
+  .card.status-definicao .card-bar-color { background: var(--status-definicao); }
+  .card.status-previsto { border: 1px solid var(--status-previsto); }
+  .card.status-previsto .card-bar-color { background: var(--status-previsto); }
+
+  /* Today line */
+  .today-line {
+    position: absolute;
+    top: 38px; bottom: 0;
+    width: 2px;
+    background: var(--brand-rose);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .today-pill {
+    position: absolute;
+    top: -28px;
+    left: 50%; transform: translateX(-50%);
+    background: var(--brand-rose);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .roadmap.hide-launched .lane-lancado { display: none; }
+
+  /* ========== MODAL ========== */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13, 27, 62, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 28px 32px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--gray-400);
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-close:hover { background: var(--gray-100); color: var(--gray-700); }
+  .modal-header {
+    margin-bottom: 16px;
+    padding-right: 32px;
+  }
+  .modal-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .module-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    line-height: 1.4;
+  }
+  .module-tag-pill.gt { background: var(--mod-gt-bg); color: var(--mod-gt-text); }
+  .module-tag-pill.mob { background: var(--mod-mob-bg); color: var(--mod-mob-text); }
+  .module-tag-pill.ehs { background: var(--mod-ehs-bg); color: var(--mod-ehs-text); }
+  .module-tag-pill.op { background: var(--mod-op-bg); color: var(--mod-op-text); }
+  .modal h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    line-height: 1.25;
+  }
+  .modal-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: var(--gray-500);
+  }
+  .modal-meta strong { color: var(--gray-700); font-weight: 600; }
+  .modal-section { margin-top: 18px; }
+  .modal-section-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray-400);
+    margin-bottom: 6px;
+  }
+  .modal-section p {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--gray-700);
+  }
+  .modal-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+  }
+  .modal-details-list li {
+    font-size: 0.825rem;
+    line-height: 1.5;
+    color: var(--gray-700);
+    padding-left: 16px;
+    position: relative;
+  }
+  .modal-details-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--brand-rose);
+  }
+  .modal-figma {
+    background: var(--brand-rose-soft);
+    border: 1px dashed var(--brand-rose-border);
+    border-radius: 8px;
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--brand-rose-text);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+  .modal-figma-frame {
+    width: 100%;
+    height: 360px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    background: var(--gray-100);
+    display: block;
+  }
+
+  /* ========== LEGEND ========== */
+  .legend {
+    display: flex;
+    gap: 24px;
+    padding: 14px 18px;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 0.75rem;
+  }
+  .legend-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .legend-title {
+    font-weight: 700;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.6px;
+  }
+  .legend-items {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gray-700);
+    font-weight: 500;
+  }
+  .legend-swatch {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+  }
+  .legend-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--gray-200);
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    text-align: center;
+    color: var(--gray-400);
+    font-size: 0.72rem;
+    padding-top: 8px;
+  }
+
+  @media (max-width: 1024px) {
+    .summary { grid-template-columns: repeat(5, 1fr); }
+    .summary-card { padding: 10px 12px; }
+    .summary-num { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="page-header">
+    <div class="page-header-left">
+      <span class="tag">Visão 2026 · Roadmap anual</span>
+      <h1>Roadmap Wehandle 2026</h1>
+      <p class="subtitle">O que estamos construindo este ano, organizado pelo estágio de cada entrega. Iniciativas se movem das swim lanes inferiores pras superiores à medida que avançam.</p>
+    </div>
+    <div class="page-header-controls">
+      <label class="toggle-switch">
+        <input type="checkbox" id="hide-launched-toggle">
+        <span class="toggle-track"></span>
+        <span>Ocultar lançadas</span>
+      </label>
+      <span class="updated-badge">Atualizado em 07/05/2026</span>
+    </div>
+  </header>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="summary-card lancado">
+      <span class="summary-num" id="sum-lancado">0</span>
+      <span class="summary-label">Lançado</span>
+    </div>
+    <div class="summary-card piloto">
+      <span class="summary-num" id="sum-piloto">0</span>
+      <span class="summary-label">Em piloto</span>
+    </div>
+    <div class="summary-card dev">
+      <span class="summary-num" id="sum-dev">0</span>
+      <span class="summary-label">Em desenvolvimento</span>
+    </div>
+    <div class="summary-card definicao">
+      <span class="summary-num" id="sum-definicao">0</span>
+      <span class="summary-label">Em definição</span>
+    </div>
+    <div class="summary-card previsto">
+      <span class="summary-num" id="sum-previsto">0</span>
+      <span class="summary-label">Previsto</span>
+    </div>
+  </div>
+
+  <div class="roadmap" id="roadmap">
+
+    <!-- Month header -->
+    <div class="month-header">
+      <div class="corner"></div>
+      <div class="month">Jan</div>
+      <div class="month">Fev</div>
+      <div class="month">Mar</div>
+      <div class="month">Abr</div>
+      <div class="month current">Mai</div>
+      <div class="month">Jun</div>
+      <div class="month">Jul</div>
+      <div class="month">Ago</div>
+      <div class="month">Set</div>
+      <div class="month">Out</div>
+      <div class="month">Nov</div>
+      <div class="month">Dez</div>
+    </div>
+
+    <!-- Swim lanes -->
+    <div class="swim-lanes" id="swim-lanes">
+      <div class="swim-lane lane-lancado">
+        <div class="lane-label">
+          <span class="status-pill"><span class="status-dot"></span>Lançado</span>
+          <span class="lane-count" id="count-lancado"></span>
+        </div>
+        <div class="lane-content" id="lane-lancado-content"></div>
+      </div>
+      <div class="swim-lane lane-piloto">
+        <div class="lane-label">
+          <span class="status-pill"><span class="status-dot"></span>Em piloto</span>
+          <span class="lane-count" id="count-piloto"></span>
+        </div>
+        <div class="lane-content" id="lane-piloto-content"></div>
+      </div>
+      <div class="swim-lane lane-dev">
+        <div class="lane-label">
+          <span class="status-pill"><span class="status-dot"></span>Em desenvolvimento</span>
+          <span class="lane-count" id="count-dev"></span>
+        </div>
+        <div class="lane-content" id="lane-dev-content"></div>
+      </div>
+      <div class="swim-lane lane-definicao">
+        <div class="lane-label">
+          <span class="status-pill"><span class="status-dot"></span>Em definição</span>
+          <span class="lane-count" id="count-definicao"></span>
+        </div>
+        <div class="lane-content" id="lane-definicao-content"></div>
+      </div>
+      <div class="swim-lane lane-previsto">
+        <div class="lane-label">
+          <span class="status-pill"><span class="status-dot"></span>Previsto</span>
+          <span class="lane-count" id="count-previsto"></span>
+        </div>
+        <div class="lane-content" id="lane-previsto-content"></div>
+      </div>
+    </div>
+
+    <div class="today-line" id="today-line" style="left: calc(200px + (100% - 200px) * 4.2 / 12);">
+      <div class="today-pill">Hoje · 7 mai</div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-block">
+      <span class="legend-title">Módulo (chave colorida)</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="legend-swatch" style="background: var(--mod-gt);"></span>GT — Gestão de Terceiros</span>
+        <span class="legend-item"><span class="legend-swatch" style="background: var(--mod-mob);"></span>Mobilização</span>
+        <span class="legend-item"><span class="legend-swatch" style="background: var(--mod-ehs);"></span>EHS em Campo</span>
+        <span class="legend-item"><span class="legend-swatch" style="background: var(--mod-op);"></span>Evoluções de Operação</span>
+      </div>
+    </div>
+    <div class="legend-divider"></div>
+    <div class="legend-block">
+      <span class="legend-title">Ambiente</span>
+      <div class="legend-items">
+        <span class="legend-item"><span class="env-badge">T</span>Tomador</span>
+        <span class="legend-item"><span class="env-badge">F</span>Fornecedor</span>
+        <span class="legend-item"><span class="env-badge">T·F</span>Ambos</span>
+        <span class="legend-item"><span class="env-badge env-interno">I</span>Interno Wehandle</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Wehandle · BU Gestão de Terceiros · Plataforma · Mobilização · EHS em Campo
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-header">
+      <div class="modal-tags" id="modal-tags"></div>
+      <h2 id="modal-title"></h2>
+      <div class="modal-meta" id="modal-meta"></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Sobre a iniciativa</div>
+      <p id="modal-description"></p>
+    </div>
+    <div class="modal-section" id="modal-value-section">
+      <div class="modal-section-label">Valor pro cliente</div>
+      <p id="modal-value"></p>
+    </div>
+    <div class="modal-section" id="modal-details-section">
+      <div class="modal-section-label">O que está incluído</div>
+      <ul class="modal-details-list" id="modal-details"></ul>
+    </div>
+    <div class="modal-section" id="modal-figma-section">
+      <div class="modal-section-label">Tela do design</div>
+      <div id="modal-figma-content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================
+  // INICIATIVAS — DADOS REAIS
+  // ============================================
+  const initiatives = [
+
+    // ===== MOBILIZAÇÃO (9) =====
+    { id: 'mob-1', name: 'Detalhes e ações do colaborador na tela de acessos', shortDesc: 'Painel completo do colaborador com pendências e ações de portaria',
+      module: 'mob', subarea: 'Acessos', env: 'tomador', start: 2, end: 4, status: 'piloto',
+      description: 'Tela de acessos consolidada com dados e status do colaborador, pendências documentais que bloqueiam acesso, integração com data de vencimento e ações operacionais (registrar integração, gerar QR Code, gerar crachá).',
+      details: ['Dados e status de acesso do colaborador','Integração com data de vencimento','Pendências de documentos que bloqueiam acesso','Visualização de bloqueio (motivo, data início/fim)','Ações: registrar integração, gerar QR Code, gerar crachá'],
+      value: 'Operação de portaria centralizada — menos cliques, menos erros, decisões mais rápidas.',
+      figmaEmbed: 'https://embed.figma.com/design/aKzttQ3LP5YIDIeqXeTS8F/Mobiliza%C3%A7%C3%A3o-%7C-Acesso-%7C-V1?node-id=17632-66975&embed-host=share' },
+
+    { id: 'mob-2', name: 'Bloqueio e desbloqueio de colaborador', shortDesc: 'Tela e fluxo dedicado pra controle de acesso',
+      module: 'mob', subarea: 'Acessos', env: 'tomador', start: 4, end: 5, status: 'dev',
+      description: 'Fluxo dedicado pra bloquear ou desbloquear o acesso de um colaborador manualmente, com motivo registrado, data de início e fim opcional.',
+      value: 'Tomador tem controle direto sobre quem pode entrar, mesmo fora das regras automáticas.', figma: false },
+
+    { id: 'mob-3', name: 'Integração de colaboradores em massa', shortDesc: 'Integre vários colaboradores ao mesmo tempo, em lote',
+      module: 'mob', subarea: 'Integração de Segurança', env: 'tomador', start: 3, end: 4, status: 'piloto',
+      description: 'Permite integrar vários colaboradores de uma vez na plataforma, ao invés de individualmente.',
+      value: 'Acelera ondas grandes de mobilização — turmas inteiras em uma única ação.', figma: false },
+
+    { id: 'mob-4', name: 'Replicação automática de integrações entre unidades', shortDesc: 'Integração de uma unidade reaproveitada nas equivalentes',
+      module: 'mob', subarea: 'Integração de Segurança', env: 'tomador', start: 4, end: 6, status: 'piloto',
+      description: 'Quando um colaborador é integrado em uma unidade, a integração é automaticamente replicada para outras unidades de risco equivalente do mesmo Tomador.',
+      value: 'Economia de tempo e custo: já gerou cerca de R$ 5 milhões em economia para uma operação grande em 2025.', figma: false },
+
+    { id: 'mob-5', name: 'EAD · Integração a distância', shortDesc: 'Treinamento de integração disponível online',
+      module: 'mob', subarea: 'Integração de Segurança', env: 'tomador', start: 4, end: 6, status: 'definicao',
+      description: 'Migração e modernização do módulo de EAD para o ambiente Labs, permitindo que o colaborador faça a integração de segurança a distância.',
+      value: 'Menos deslocamento, mais escala — turmas grandes podem se integrar sem sair do trabalho.', figma: false },
+
+    { id: 'mob-6', name: 'Calendário · Integração presencial', shortDesc: 'Agendamento e gestão de turmas presenciais',
+      module: 'mob', subarea: 'Integração de Segurança', env: 'tomador', start: 4, end: 6, status: 'definicao',
+      description: 'Migração do módulo de Calendário para o Labs, com agendamento de turmas, gestão de presença e integração com o fluxo de aprovação.',
+      value: 'Operação de integração presencial visível e organizada num calendário compartilhado.', figma: false },
+
+    { id: 'mob-7', name: 'Configurar grupos de unidades para replicação automática', shortDesc: 'Define quais unidades replicam integrações entre si',
+      module: 'mob', subarea: 'Integração de Segurança', env: 'tomador', start: 8, end: 9, status: 'previsto',
+      description: 'Tela de configuração para o Tomador definir quais unidades têm risco equivalente e devem replicar integrações automaticamente entre si.',
+      value: 'Mais controle e flexibilidade — o Tomador parametriza a replicação sem precisar do time Wehandle.', figma: false },
+
+    { id: 'mob-8', name: 'Layout de crachá por unidade', shortDesc: 'Cada unidade pode ter seu próprio layout de crachá',
+      module: 'mob', subarea: 'Crachás', env: 'tomador', start: 1, end: 3, status: 'lancado',
+      description: 'Cada unidade do Tomador pode ter seu próprio layout de crachá, com identidade visual e campos específicos.',
+      value: 'Identidade visual respeitada por unidade — sem precisar de ajuste manual ou exceção.',
+      figmaEmbed: 'https://embed.figma.com/make/0nHEdgWlZH4l5EvPBOCGEW/Configurar-layout-crach%C3%A1?embed-host=share' },
+
+    { id: 'mob-9', name: 'Crachá personalizado (cor, foto, informações)', shortDesc: 'Tomador configura cor, foto e dados do crachá',
+      module: 'mob', subarea: 'Crachás', env: 'tomador', start: 1, end: 3, status: 'lancado',
+      description: 'O Tomador configura cor, foto e quais informações aparecem no crachá, sem depender da operação Wehandle.',
+      value: 'Autonomia total na configuração de crachás — mudanças feitas em minutos pelo cliente.',
+      figmaEmbed: 'https://embed.figma.com/make/0nHEdgWlZH4l5EvPBOCGEW/Configurar-layout-crach%C3%A1?embed-host=share' },
+
+    // ===== GT (18) =====
+    { id: 'gt-1', name: 'Convite a fornecedor', shortDesc: 'Tomador convida empresa fornecedora pra plataforma',
+      module: 'gt', subarea: 'Serviços', env: 'tomador', start: 1, end: 2, status: 'piloto',
+      description: 'Você (Tomador) cadastra a empresa fornecedora e envia o convite com poucos cliques. O Fornecedor recebe o link e completa o próprio cadastro do lado dele.',
+      value: 'Reduz o tempo de onboarding de novos fornecedores e elimina retrabalho de cadastros duplicados.',
+      figmaEmbed: 'https://embed.figma.com/design/2A7OCSc92jClTeY2O5WpGQ/Servi%C3%A7os?node-id=14255-112487&embed-host=share' },
+
+    { id: 'gt-2', name: 'Cadastro do Fornecedor via convite', shortDesc: 'Fornecedor completa cadastro via link recebido',
+      module: 'gt', subarea: 'Serviços', env: 'fornecedor', start: 4, end: 5, status: 'piloto',
+      description: 'Após receber o convite do Tomador, o Fornecedor completa o cadastro da empresa em fluxo guiado. O cadastro é único na plataforma — quem já está cadastrado por outro Tomador só precisa aceitar o novo convite.',
+      value: 'Onboarding rápido pro Fornecedor; reaproveitamento de cadastro pra quem já está na rede.',
+      figmaEmbed: 'https://embed.figma.com/design/sZNvtc8b3ErHi0Ax7NCgYs/Fornecedor---Cadastro---V3?node-id=0-1&embed-host=share' },
+
+    { id: 'gt-3', name: 'Permissões por unidade e perfil', shortDesc: 'Cada usuário enxerga só as unidades autorizadas',
+      module: 'gt', subarea: 'Configurações', env: 'tomador', start: 3, end: 3, status: 'piloto',
+      description: 'Você define quem da sua equipe pode ver e agir em quais unidades e em quais seções da plataforma. Cada usuário enxerga só o que faz sentido pra função dele.',
+      value: 'Controle de acesso granular — gestores de unidade veem só a sua, diretoria vê tudo.', figma: false },
+
+    { id: 'gt-4', name: 'Editar serviço já configurado', shortDesc: 'Atualize regras sem recriar o serviço do zero',
+      module: 'gt', subarea: 'Serviços', env: 'tomador', start: 2, end: 2, status: 'piloto',
+      description: 'Atualize as regras de um serviço (atividades exigidas, treinamentos, NRs, documentos atrelados) sem precisar criar do zero. As mudanças passam a valer pros colaboradores alocados a partir do momento da edição.',
+      value: 'Acompanha mudanças de escopo do contrato sem perder histórico.',
+      figmaEmbed: 'https://embed.figma.com/design/2A7OCSc92jClTeY2O5WpGQ/Servi%C3%A7os?node-id=15688-105637&embed-host=share' },
+
+    { id: 'gt-5', name: 'Ações rápidas dentro do serviço', shortDesc: 'Desalocar, afastar, registrar retorno em um clique',
+      module: 'gt', subarea: 'Serviços', env: 'tomador', start: 2, end: 2, status: 'piloto',
+      description: 'Direto da tela do serviço, você executa as principais ações sobre os colaboradores alocados — desalocar, afastar, registrar retorno — sem precisar navegar entre menus.',
+      value: 'Menos cliques, menos tempo perdido na operação do dia a dia.',
+      figmaEmbed: 'https://embed.figma.com/design/2A7OCSc92jClTeY2O5WpGQ/Servi%C3%A7os?node-id=14624-179056&embed-host=share' },
+
+    { id: 'gt-6', name: 'Lista de serviços do Fornecedor', shortDesc: 'Painel único com todos os serviços e conformidade',
+      module: 'gt', subarea: 'Serviços', env: 'fornecedor', start: 2, end: 3, status: 'piloto',
+      description: 'O Fornecedor visualiza, num painel único, todos os serviços que presta a cada Tomador, com status de conformidade documental por serviço.',
+      value: 'Visão consolidada dos contratos ativos — Fornecedor sabe o que falta pra ficar em dia em cada um.',
+      figmaEmbed: 'https://embed.figma.com/design/vgqGunyBJFsdk6cQanqqGC/Servi%C3%A7os-fornecedores?node-id=18618-30063&embed-host=share' },
+
+    { id: 'gt-7', name: 'Detalhes do serviço (Fornecedor)', shortDesc: 'Tela completa do serviço pelo lado do Fornecedor',
+      module: 'gt', subarea: 'Serviços', env: 'fornecedor', start: 3, end: 3, status: 'piloto',
+      description: 'Tela de detalhe do serviço pelo lado do Fornecedor, mostrando colaboradores alocados, documentos exigidos, status de cada um e ações disponíveis.',
+      value: 'Fornecedor não precisa pedir informação pro Tomador — vê tudo direto.',
+      figmaEmbed: 'https://embed.figma.com/design/vgqGunyBJFsdk6cQanqqGC/Servi%C3%A7os-fornecedores?node-id=17632-66975&embed-host=share' },
+
+    { id: 'gt-8', name: 'Cadastro de colaboradores em massa', shortDesc: 'Importe centenas de colaboradores via planilha',
+      module: 'gt', subarea: 'Colaboradores', env: 'fornecedor', start: 5, end: 6, status: 'piloto',
+      description: 'Importação em massa de colaboradores via planilha, com validação dos dados antes da carga, mapeamento automático de campos e relatório de erros pra correção.',
+      value: 'Acelera o onboarding inicial de fornecedores grandes — em vez de cadastrar 200 colaboradores um a um, sobe tudo de uma vez.', figma: false },
+
+    { id: 'gt-9', name: 'Alocar e desalocar colaborador', shortDesc: 'Fluxo simplificado com validação automática',
+      module: 'gt', subarea: 'Colaboradores', env: 'fornecedor', start: 4, end: 4, status: 'piloto',
+      description: 'O Fornecedor aloca e desaloca colaboradores em serviços com fluxo simplificado, com validação automática de conformidade documental antes da alocação.',
+      value: 'Operação ágil — sem planilhas paralelas e com travas que evitam alocar colaborador inapto.', figma: false },
+
+    { id: 'gt-10', name: 'Demissão e afastamento', shortDesc: 'Atualiza habilitação e desaloca automaticamente',
+      module: 'gt', subarea: 'Colaboradores', env: 'fornecedor', start: 3, end: 4, status: 'piloto',
+      description: 'O Fornecedor registra demissão ou afastamento (médico, férias, licença) com poucos cliques. A plataforma atualiza automaticamente o status de habilitação e desaloca o colaborador dos serviços ativos.',
+      value: 'Habilitação e MRR refletem a realidade na hora — sem necessidade de gestão paralela.', figma: false },
+
+    { id: 'gt-11', name: 'Status do colaborador padronizado', shortDesc: 'Tomador e Fornecedor leem a mesma fonte de verdade',
+      module: 'gt', subarea: 'Colaboradores', env: 'ambos', start: 3, end: 4, status: 'piloto',
+      description: 'Unificamos a régua de status do colaborador em toda a plataforma — bloqueado, apto, afastado, demitido — com regra clara de bloqueio e motivo associado. Tomador e Fornecedor passam a ler a mesma fonte de verdade.',
+      value: 'Acaba a ambiguidade — todos veem o mesmo status, com motivo de bloqueio explícito.', figma: false },
+
+    { id: 'gt-12', name: 'Documentos internacionais', shortDesc: 'Suporte a colaboradores e fornecedores estrangeiros',
+      module: 'gt', subarea: 'Central de Documentos', env: 'ambos', start: 4, end: 5, status: 'piloto',
+      description: 'Suporte a documentos de colaboradores e fornecedores estrangeiros (passaporte, RNE, vistos de trabalho, equivalências de NR), com validação automática adaptada à origem.',
+      value: 'Atende operações com mão de obra internacional sem fricção, dentro da mesma plataforma.', figma: false },
+
+    { id: 'gt-13', name: 'Notificações e mensageria', shortDesc: 'Alertas unificados por e-mail, push e in-app',
+      module: 'gt', subarea: 'Mensagerias', env: 'ambos', start: 5, end: 5, status: 'piloto',
+      description: 'Sistema unificado de notificações e mensagens da plataforma — alertas de pendência, vencimento de documento, aprovação, mudança de status — entregues por e-mail, push e dentro da plataforma.',
+      value: 'Ninguém perde prazo crítico — todos os envolvidos são avisados na hora certa.',
+      figmaEmbed: 'https://embed.figma.com/design/ixJqAE9X0iFgA1eK39IpzX/Labs---Caixa-de-entrada---V.1?node-id=0-1&embed-host=share' },
+
+    { id: 'gt-14', name: 'Contestação do status de validação', shortDesc: 'Fornecedor contesta validação direto na plataforma',
+      module: 'gt', subarea: 'Central de Documentos', env: 'fornecedor', start: 6, end: 8, status: 'dev',
+      description: 'Quando um documento é invalidado, o Fornecedor pode contestar diretamente na plataforma com argumentação e anexos, sem precisar abrir ticket de suporte. A contestação vai pro time de validação revisar.',
+      value: 'Resolução mais rápida de divergências, sem fricção de canal externo.',
+      figmaEmbed: 'https://embed.figma.com/design/OQhOWqAEVMs47TAyL81dzZ/Documentos---Contesta%C3%A7%C3%A3o---V1?node-id=0-1&embed-host=share' },
+
+    { id: 'gt-15', name: 'Isenção em massa e por pendência', shortDesc: 'Tomador isenta documentos em lote ou por pendência específica',
+      module: 'gt', subarea: 'Central de Documentos', env: 'tomador', start: 5, end: 6, status: 'dev',
+      description: 'Tomador pode isentar documentos pendentes em lote (vários colaboradores ou fornecedores ao mesmo tempo) ou de forma pontual por pendência específica.',
+      value: 'Operação flexível — Tomador resolve exceções rapidamente sem ticket.', figma: false },
+
+    { id: 'gt-16', name: 'Vigência da matriz de risco', shortDesc: 'Atualize matriz sem gerar pendências para inativos',
+      module: 'gt', subarea: 'Configurações', env: 'tomador', start: 4, end: 6, status: 'dev',
+      description: 'Permite atualizar a Matriz de Risco do Tomador sem que isso gere pendências documentais para colaboradores que já estão desalocados ou demitidos. As novas regras passam a valer apenas para colaboradores ativos a partir da data de vigência.',
+      value: 'Mudanças na matriz não criam falsas pendências históricas — mais limpo, mais correto.', figma: false },
+
+    { id: 'gt-17', name: 'Piloto operação Chile (Latam)', shortDesc: 'Plataforma operando em Latam — primeiro piloto no Chile',
+      module: 'gt', subarea: 'Internacionalização da plataforma', env: 'ambos', start: 6, end: 8, status: 'piloto',
+      description: 'Internacionalização da plataforma para operação em países da América Latina, começando com piloto no Chile. Ajustes de idioma, regras locais, documentos específicos e moeda.',
+      value: 'Wehandle disponível pros seus contratos em outros países da Latam, com a mesma plataforma.', figma: false },
+
+    { id: 'gt-18', name: 'Visão executiva · Risco trabalhista', shortDesc: 'Painel executivo com exposição de risco trabalhista por fornecedor',
+      module: 'gt', subarea: 'BIs - relatórios', env: 'tomador', start: 5, end: 7, status: 'definicao',
+      description: 'Painel executivo do Tomador com visão consolidada de risco trabalhista (encargos, folha, FGTS, holerites) por fornecedor, com cálculo de exposição de passivo e tendência mês a mês.',
+      value: 'Diretoria enxerga em tempo real o quanto está exposto a passivo trabalhista — input pra decisão e priorização.', figma: false },
+
+    { id: 'gt-19', name: 'Tela de gestão de colaboradores', shortDesc: 'Visão e ações centralizadas sobre os colaboradores',
+      module: 'gt', subarea: 'Colaboradores', env: 'ambos', start: 7, end: 9, status: 'definicao',
+      description: 'Tela centralizada para visualização e gestão dos colaboradores cadastrados na plataforma — busca, filtros, ações operacionais e visão consolidada de status, alocações e conformidade.',
+      value: 'Operação de colaboradores num único lugar — sem precisar navegar entre menus pra cada ação.',
+      figmaEmbed: 'https://embed.figma.com/design/NHkCJlNLizUad9RqulLC5P/Colaboradores?node-id=9389-57502&embed-host=share' },
+
+    // ===== EHS EM CAMPO (2) =====
+    { id: 'ehs-1', name: 'App de auditoria em campo', shortDesc: 'Auditor preenche formulários, tira fotos georreferenciadas e reporta inconsistências',
+      module: 'ehs', subarea: 'Auditoria em Campo', env: 'tomador', start: 6, end: 11, status: 'previsto',
+      description: 'Aplicativo mobile pra times de SST do Tomador realizarem auditorias em campo. Auditor preenche formulários personalizados (criados pelo próprio Tomador), captura fotos georreferenciadas e reporta inconsistências encontradas nas condições de trabalho dos colaboradores em campo.',
+      value: 'Auditoria de campo digitalizada — sem prancheta, sem retrabalho, com evidência fotográfica e GPS.', figma: false },
+
+    { id: 'ehs-2', name: 'Verificação de aptidão do colaborador em campo', shortDesc: 'Confirma se o colaborador está apto pro ambiente e pra atividade naquele momento',
+      module: 'ehs', subarea: 'Auditoria em Campo', env: 'tomador', start: 6, end: 11, status: 'previsto',
+      description: 'No mesmo app, técnico de SST lê o QR Code do crachá do colaborador em campo e visualiza imediatamente NRs, treinamentos e ambientes liberados (altura, confinado, alta tensão). Sabe na hora se aquele colaborador pode estar fazendo aquela atividade.',
+      value: 'Decisão segura na hora — colaborador inapto não passa despercebido em campo.', figma: false },
+
+    // ===== EVOLUÇÕES DE OPERAÇÃO (4) =====
+    { id: 'op-1', name: 'Central de Comando · Backoffice', shortDesc: 'Cargas em massa pra acelerar implantação dos clientes',
+      module: 'op', subarea: 'Atendimento', env: 'interno', start: 2, end: 5, status: 'dev',
+      description: 'Ferramenta interna da Wehandle (time N2) pra criação em massa de fornecedores, serviços, colaboradores, alocações e documentos. Acelera a implantação inicial e a migração de dados de outros sistemas pelos clientes.',
+      value: 'Implantação mais rápida e migração de bases legadas sem fricção pro cliente.', figma: false },
+
+    { id: 'op-2', name: 'Atendimento mais rápido e com contexto', shortDesc: 'Tickets com contexto, abertura em massa e fila otimizada',
+      module: 'op', subarea: 'Atendimento', env: 'interno', start: 4, end: 7, status: 'dev',
+      description: 'Conjunto de melhorias internas pra absorver picos de volume de tickets sem perder SLA: tickets nascem com identificação do documento, motivo e empresa; abertura direto da tela do doc; contestação em massa por planilha; fila separada por tipo; copiloto IA assistindo a análise.',
+      details: ['Tickets nascem com doc_id, motivo, histórico e link — zero busca manual','Abertura de ticket direto da tela do documento','Contestação em massa por planilha — várias divergências de uma vez','Fila separada de QA aleatório x revalidação','Copiloto IA sugere ação, validador humano decide'],
+      value: 'Atendimento absorve mais volume sem perder qualidade — você espera menos.', figma: false },
+
+    { id: 'op-3', name: 'Validações mais claras e robustas', shortDesc: 'Regras automáticas evitam erros e mensagens claras explicam motivos',
+      module: 'op', subarea: 'Validação', env: 'interno', start: 4, end: 7, status: 'dev',
+      description: 'Conjunto de melhorias internas pra deixar a validação documental mais consistente e a comunicação com o usuário mais clara: regras duras em mudanças críticas de cadastro; comunicação proativa quando detectamos picos de problemas; sem ticket duplicado em documento já analisado; mensagens ricas explicando motivo + próximo passo.',
+      details: ['Regras duras em mudanças de CNPJ/cargo — fonte de verdade unificada','Comunicação proativa quando detectamos pico de problemas — antes de virar onda de ticket','Documento já analisado não gera ticket duplicado — mensagem clara pro Fornecedor','Mensagens de invalidação ricas: motivo + próximo passo + link de ação'],
+      value: 'Menos surpresa, mais previsibilidade — você sempre sabe o que precisa fazer.', figma: false },
+
+    { id: 'op-4', name: 'Monitoramento ao vivo da operação', shortDesc: 'Detectamos problemas cedo e ajustamos antes de virarem reclamação',
+      module: 'op', subarea: 'Dados', env: 'interno', start: 4, end: 7, status: 'dev',
+      description: 'Conjunto de melhorias internas pra monitorar a saúde da operação em tempo real, agindo antes que problemas escalem: detecção precoce de invalidação por tipo de documento; alerta de pico de tickets por tema; lançamentos graduais com rollback rápido; dashboard de meta ao vivo; base de dados unificada de tickets.',
+      details: ['Monitor de invalidação por tipo — detecta outliers antes de virar ticket','Monitor de pico de tickets por tema — input pro time agir cedo','Lançamentos graduais com feature flag e rollback em 1 clique','Dashboard da meta de tickets em tempo real','Base de dados unificada de tickets — base pra analytics'],
+      value: 'Problemas pegos no nascedouro — você sente menos impacto do que se a gente esperasse virar reclamação.', figma: false },
+
+  ];
+
+  // ============================================
+  // CONSTANTS
+  // ============================================
+  const STATUS_LANES = ['lancado', 'piloto', 'dev', 'definicao', 'previsto'];
+  const ENV_LABELS = { tomador: 'Tomador', fornecedor: 'Fornecedor', ambos: 'Tomador + Fornecedor', interno: 'Interno Wehandle' };
+  const ENV_BADGE = { tomador: 'T', fornecedor: 'F', ambos: 'T·F', interno: 'I' };
+  const MODULE_LABELS = { gt: 'GT — Gestão de Terceiros', mob: 'Mobilização', ehs: 'EHS em Campo', op: 'Evoluções de Operação' };
+  const STATUS_LABELS = { lancado: 'Lançado', piloto: 'Em piloto', dev: 'Em desenvolvimento', definicao: 'Em definição', previsto: 'Previsto' };
+  const MONTH_NAMES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+  // ============================================
+  // RENDER LANES
+  // ============================================
+  function renderLane(laneStatus) {
+    const containerEl = document.getElementById(`lane-${laneStatus}-content`);
+    const items = initiatives.filter(i => i.status === laneStatus);
+
+    // Group by module + subarea
+    const groupMap = new Map();
+    items.forEach(item => {
+      const key = `${item.module}|${item.subarea}`;
+      if (!groupMap.has(key)) groupMap.set(key, []);
+      groupMap.get(key).push(item);
+    });
+
+    const groups = Array.from(groupMap.entries()).map(([key, items]) => {
+      const [module, subarea] = key.split('|');
+      return {
+        module, subarea,
+        items: items.sort((a,b) => a.start - b.start),
+        minStart: Math.min(...items.map(i => i.start)),
+      };
+    });
+    // Sort by module first (gt → mob → ehs → op), then by minStart
+    const moduleOrder = { gt: 0, mob: 1, ehs: 2, op: 3 };
+    groups.sort((a,b) => {
+      const mo = moduleOrder[a.module] - moduleOrder[b.module];
+      if (mo !== 0) return mo;
+      return a.minStart - b.minStart;
+    });
+
+    groups.forEach(group => {
+      const groupEl = document.createElement('div');
+      groupEl.className = `module-group mod-${group.module}`;
+
+      const headerEl = document.createElement('div');
+      headerEl.className = 'module-group-header';
+      const moduleShort = MODULE_LABELS[group.module].split('—')[0].trim();
+      headerEl.innerHTML = `${moduleShort}<span class="sep">·</span><span class="sub-area">${group.subarea}</span>`;
+      groupEl.appendChild(headerEl);
+
+      const tracksEl = document.createElement('div');
+      tracksEl.className = 'module-group-tracks';
+
+      // Greedy packing
+      const rows = [];
+      group.items.forEach(item => {
+        let placed = false;
+        for (const row of rows) {
+          const last = row[row.length - 1];
+          if (last.end < item.start) { row.push(item); placed = true; break; }
+        }
+        if (!placed) rows.push([item]);
+      });
+
+      rows.forEach(row => {
+        const trackDiv = document.createElement('div');
+        trackDiv.className = 'card-track';
+        row.forEach(item => trackDiv.appendChild(createCard(item)));
+        tracksEl.appendChild(trackDiv);
+      });
+
+      groupEl.appendChild(tracksEl);
+      containerEl.appendChild(groupEl);
+    });
+  }
+
+  function createCard(item) {
+    const left = ((item.start - 1) / 12) * 100;
+    const width = ((item.end - item.start + 1) / 12) * 100;
+    const card = document.createElement('div');
+    card.className = `card status-${item.status}`;
+    card.style.left = `calc(${left}% + 2px)`;
+    card.style.width = `calc(${width}% - 4px)`;
+    card.onclick = () => openModal(item);
+
+    const hasFigmaCard = item.figma || item.figmaEmbed;
+    const figmaIcon = hasFigmaCard ? `<span class="figma-indicator" title="Tem tela Figma">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="9" cy="9" r="1.5"/>
+        <path d="M21 15l-5-5L5 21"/>
+      </svg>
+    </span>` : '';
+
+    const envClass = item.env === 'interno' ? 'env-interno' : '';
+
+    card.innerHTML = `
+      <div class="card-bar-color"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <span class="card-name">${item.name}</span>
+          <div class="card-tags">
+            <span class="env-badge ${envClass}" title="${ENV_LABELS[item.env]}">${ENV_BADGE[item.env]}</span>
+            ${figmaIcon}
+          </div>
+        </div>
+        <div class="card-desc">${item.shortDesc || ''}</div>
+      </div>
+    `;
+    return card;
+  }
+
+  // ============================================
+  // MODAL
+  // ============================================
+  function openModal(item) {
+    document.getElementById('modal-title').textContent = item.name;
+    document.getElementById('modal-description').textContent = item.description;
+
+    document.getElementById('modal-tags').innerHTML = `
+      <span class="module-tag-pill ${item.module}">${MODULE_LABELS[item.module]}</span>
+      <span class="modal-meta-pill">${item.subarea}</span>
+      <span class="modal-meta-pill">${ENV_LABELS[item.env]}</span>
+    `;
+
+    const period = item.start === item.end ? MONTH_NAMES[item.start - 1] : `${MONTH_NAMES[item.start - 1]} → ${MONTH_NAMES[item.end - 1]}`;
+    document.getElementById('modal-meta').innerHTML = `
+      <span><strong>Período:</strong> ${period} 2026</span>
+      <span><strong>Status:</strong> ${STATUS_LABELS[item.status]}</span>
+    `;
+
+    const valueSection = document.getElementById('modal-value-section');
+    if (item.value) {
+      document.getElementById('modal-value').textContent = item.value;
+      valueSection.style.display = 'block';
+    } else { valueSection.style.display = 'none'; }
+
+    const detailsSection = document.getElementById('modal-details-section');
+    if (item.details && item.details.length) {
+      const ul = document.getElementById('modal-details');
+      ul.innerHTML = '';
+      item.details.forEach(d => {
+        const li = document.createElement('li');
+        li.textContent = d;
+        ul.appendChild(li);
+      });
+      detailsSection.style.display = 'block';
+    } else { detailsSection.style.display = 'none'; }
+
+    const figmaSection = document.getElementById('modal-figma-section');
+    const figmaContent = document.getElementById('modal-figma-content');
+    const hasEmbed = !!item.figmaEmbed;
+    const hasFigma = item.figma || hasEmbed;
+    if (hasFigma) {
+      figmaSection.style.display = 'block';
+      if (hasEmbed) {
+        figmaContent.innerHTML = `<iframe class="modal-figma-frame" src="${item.figmaEmbed}" allowfullscreen></iframe>`;
+      } else {
+        figmaContent.innerHTML = `<div class="modal-figma">[Tela disponível no Figma — aguardando integração]</div>`;
+      }
+    } else {
+      figmaSection.style.display = 'none';
+    }
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  // ============================================
+  // TOGGLE
+  // ============================================
+  document.getElementById('hide-launched-toggle').addEventListener('change', (e) => {
+    document.getElementById('roadmap').classList.toggle('hide-launched', e.target.checked);
+  });
+
+  // ============================================
+  // INIT — blindado contra erros parciais
+  // ============================================
+  try {
+    STATUS_LANES.forEach(s => {
+      try { renderLane(s); } catch (e) { console.error('Erro renderLane', s, e); }
+      const count = initiatives.filter(i => i.status === s).length;
+      const elCount = document.getElementById(`count-${s}`);
+      const elSum = document.getElementById(`sum-${s}`);
+      if (elCount) elCount.textContent = `${count} ${count === 1 ? 'iniciativa' : 'iniciativas'}`;
+      if (elSum) elSum.textContent = count;
+    });
+    console.log('Roadmap renderizado:', initiatives.length, 'iniciativas');
+  } catch (e) {
+    console.error('Erro fatal no render do roadmap:', e);
+    alert('Erro ao renderizar o roadmap. Abra o Console (F12) pra ver o detalhe.');
+  }
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
